@@ -1,5 +1,7 @@
 package step_definitions.clubhouse;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 
 import io.cucumber.java.en.Given;
@@ -32,9 +34,21 @@ public class Login_stepDefinitions {
 		login.loginToClubHouse(email, pwd);
 	}
 	
+	@Given("Login to clubhouse as {string}")
+	public void login_to_clubhouse(String accountReference) {
+		login.loginToClubHouse(accountReference);
+	}
 	@Then("verify invalid login message")
 	public void verify_invalid_login_message() {
 		login.verifyInvalidUserCredentials();
 	}
 	
+	@Given("select Forgot Password Link")
+	public void select_forgot_password_link() {
+	    login.getForgotPasswordLink().click();
+	}
+	@Then("verify I am redirected to the correct url")
+	public void verify_i_am_redirected_to_the_correct_url() {
+	    login.verifyResetPasswordUrl();
+	}
 }
