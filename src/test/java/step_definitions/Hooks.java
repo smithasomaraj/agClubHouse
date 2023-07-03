@@ -1,5 +1,7 @@
 package step_definitions;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import io.cucumber.java.After;
@@ -22,6 +24,11 @@ public class Hooks {
 
 	@After
 	public void afterCallingScenario(Scenario scenario) {
+		 //validate if scenario has failed
+        if(scenario.isFailed()) {
+            final byte[] screenshot = ((TakesScreenshot) driver ).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", scenario.getName()); 
+        } 
 		System.out.println("================Ending Scenario============== " + scenario.getName() + "\n");
 		driver.quit();
 	}
